@@ -1,52 +1,44 @@
 ---
-bio: My research interests include distributed robotics, mobile computing and programmable
-  matter.
+bio: I am interested in data analytics and data science methods as applied to problems in the energy industry.
 education:
   courses:
-  - course: PhD in Artificial Intelligence
-    institution: Stanford University
-    year: 2012
-  - course: MEng in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2009
-  - course: BSc in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2008
+  - course: MSc in Data Analytics
+    institution: Oregon State University
+    year: 2022 (Expected)
+  - course: MSc in Geology
+    institution: University of Wisconsin-Madison
+    year: 1997
+  - course: BSc in Geology
+    institution: Louisiana State University
+    year: 1994
 email: ""
 highlight_name: false
 interests:
-- Artificial Intelligence
-- Computational Linguistics
-- Information Retrieval
+- Data Analytics
+- Data Visualization
+- Machine Learning Applications to the Energy Industry
 organizations:
-- name: Stanford University
-  url: https://www.stanford.edu/
-role: Professor of Artificial Intelligence
+- name: Oregon State University
+  url: https://www..edu/
+role: Graduate Student of Data Analytics
 social:
 - icon: envelope
   icon_pack: fas
   link: /#contact
 - display:
     header: true
-  icon: twitter
-  icon_pack: fab
-  label: Follow me on Twitter
-  link: https://twitter.com/GeorgeCushen
-- icon: graduation-cap
-  icon_pack: fas
-  link: https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ
 - icon: github
   icon_pack: fab
-  link: https://github.com/gcushen
+  link: https://github.com/akwohlgenant
 - icon: linkedin
   icon_pack: fab
-  link: https://www.linkedin.com/
+  link: https://www.linkedin.com/in/andywohlgenant
 superuser: true
-title: Nelson Bighetti
+title: Andy Wohlgenant
 ---
 
-Nelson Bighetti is a professor of artificial intelligence at the Stanford AI Lab. His research interests include distributed robotics, mobile computing and programmable matter. He leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+Andy Wohlgenant is a graduate student studying Data Analytics at Oregon State University.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
+Prior to his studies at Oregon State, Andy worked for 19 years as a geologist and geophysicist in the oil and gas industry for ExxonMobil, US Bureau of Ocean Energy Management, Halliburton, and Netherland, Sewell & Associates, Inc., a worldwide petroleum consulting firm located in Dallas, Texas, USA.
 
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "media/demo_resume.pdf" "newtab" >}}resumé{{< /staticref >}}.
+He currently resides in the San Francisco Bay area in California.
