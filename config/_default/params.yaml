@@ -23,37 +23,15 @@ twitter: ''
 email: akwohlg@gmail.com
 phone: 
 address:
-  street:
-  city:
   region: CA
   postcode: '95008'
   country: United States
   country_code: US
 coordinates:
-  latitude: '37.4275'
-  longitude: '-122.1697'
-directions:
-office_hours:
-  - 'Monday 10:00 to 13:00'
-  - 'Wednesday 09:00 to 10:00'
-appointment_url: 'https://calendly.com'
+  latitude: '37.293889'
+  longitude: '-121.955'
 contact_links:
-  - icon: twitter
-    icon_pack: fab
-    name: DM Me
-    link: 'https://twitter.com/Twitter'
-  - icon: skype
-    icon_pack: fab
-    name: Skype Me
-    link: 'skype:echo123?call'
-  - icon: keybase
-    icon_pack: fab
-    name: Chat on Keybase
-    link: 'https://keybase.io/'
-  - icon: comments
-    icon_pack: fas
-    name: Discuss on Forum
-    link: 'https://discourse.gohugo.io'
+
 
 # Site header
 
