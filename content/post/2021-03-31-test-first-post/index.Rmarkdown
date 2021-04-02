@@ -1,5 +1,5 @@
 ---
-title: Test First Post2
+title: Test First Post
 author: ''
 date: '2021-03-31'
 slug: test-first-post2
@@ -16,6 +16,11 @@ image:
   preview_only: no
 projects: []
 ---
+
+## My First R Markdown Post
+
+This is my first post, I will just be plotting some random stuff to see if it works.  Here goes...
+
 ```{r}
 summary(Orange)
 ```
