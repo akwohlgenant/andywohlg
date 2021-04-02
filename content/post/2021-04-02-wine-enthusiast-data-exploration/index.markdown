@@ -19,11 +19,15 @@ projects: []
 
 ### Introduction
 
-I like wine.  Lots of people like wine.  I tend to drink the same wines over and over again, from an embarrassingly small list of varieties and regions.  But there are hundreds of varieties of wine produced in dozens of regions in countries ranging from Armenia to Uruguay, with a dizzying array of naming conventions that can be downright confusing.  And I, like many people, am interested in learning more about wines, maybe in the hope of finding a cheap, underrated bargain at my local liquor store.  Luckily, there are myriad magazines and websites devoted entirely to the discussion, reviewing, and rating of wines.  One of the most popular of such magazines and websites is _Wine Enthusiast_.
+I like wine.  Lots of people like wine.  I tend to drink the same wines over and over again, from an embarrassingly small list of varieties and regions.  But there are hundreds of varieties of wine produced in dozens of regions in countries ranging from Armenia to Uruguay, with a dizzying array of naming conventions that can be downright confusing.
+
+Like many people, I am interested in learning more about wines, maybe in the hope of finding a cheap, underrated bargain at my local liquor store.  Luckily, there are myriad magazines and websites devoted entirely to the discussion, reviewing, and rating of wines.  One of the most popular of such magazines and websites is _Wine Enthusiast_ (Image by Serge Esteve on Unsplash).
 
 ![my-first-image](serge-esteve-AZW8IbilGLg-unsplash.jpg)
 
-_Wine Enthusiast_ was founded in 1988 by Adam and Sybil Strum, and now has a circulation of more than 250,000.  One of the most popular features of the Wine Enthusiast magazine and website (www.winemag.com) are the wine reviews, which contain a wealth of information about each wine, both useful and not so useful.  Information found in a given review includes: the country and region of origin, the name of the vintner or winery, the variety (e.g. Pinot Noir), the price (arguably the most important feature), the name of the reviewer, and even the reviewer's _Twitter_ handle.  In addition to descriptive information, each review contains a rating or "points" awarded to the wine based on a variety of categories.  The ratings are purported to be on a 100-point scale, although in reality it is just a 20-point scale from 80 to 100 points.
+_Wine Enthusiast_ was founded in 1988 by Adam and Sybil Strum, and now has a circulation of more than 250,000.  One of the most popular features of the Wine Enthusiast magazine and website (www.winemag.com) are the wine reviews, which contain a wealth of information about each wine, both useful and not so useful.
+
+Information found in a given review includes: the country and region of origin, the name of the vintner or winery, the variety (e.g. Pinot Noir), the price (arguably the most important feature), the name of the reviewer, and even the reviewer's _Twitter_ handle.  In addition to descriptive information, each review contains a rating or "points" awarded to the wine based on a variety of categories.  The ratings are purported to be on a 100-point scale, although in reality it is just a 20-point scale from 80 to 100 points.
 
 Wine Enthusiast's 100-point wine-scoring scale:
 
@@ -160,7 +164,7 @@ wine$description[sample(1:129971, 1)]
 ```
 
 ```
-## [1] "Winemaker: Etienne le Riche. This is a beast of a wine right now, begging for time in the cellar to further mature. Currently, assertive oaky tones of sweet smoke, cigar box and char are front and center on the bouquet, with supporting notes of cassis, blackcurrant leaf, brambly berry and plum skin to show the fruity core beneath. The palate is dark and brooding, with concentrated dark-fruit flavors and firmly structured tannins that beg for time to harmonize and resolve. Drink 2020–2025."
+## [1] "A top-of-the-line effort and a departure from the producer's single-vineyard, 100% varietal bottlings, this blends 4% Malbec and 3% Merlot. Spicy with clove scents, it showcases deep cassis and cranberry flavors, with a lift of red fruit and supportive acidity."
 ```
 
 This description is full of interesting adjectives and imagery meant to elicit in the reader a sense of the appearance, aroma, and flavor of the wine.  Later, the words used in the description variable will be more thoroughly investigated and visualized.
@@ -618,7 +622,7 @@ And finally, generate the word cloud from the frequency dataframe.
 
 
 ```r
-wordcloud(rownames(freq), freq[,1], max.words=50, colors=brewer.pal(1, "Dark2"))
+wordcloud(rownames(freq), freq[,1], max.words=100, colors=brewer.pal(1, "Dark2"))
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-36-1.png" width="672" />
