@@ -11,7 +11,7 @@ authors: []
 lastmod: '2021-04-02T14:21:51-07:00'
 featured: no
 image:
-  caption: ''
+  caption: 'Image credit: [**Unsplash**](https://unsplash.com/photos/AZW8IbilGLg)'
   focal_point: ''
   preview_only: no
 projects: []
@@ -21,16 +21,19 @@ projects: []
 
 I like wine.  Lots of people like wine.  I tend to drink the same wines over and over again, from an embarrassingly small list of varieties and regions.  But there are hundreds of varieties of wine produced in dozens of regions in countries ranging from Armenia to Uruguay, with a dizzying array of naming conventions that can be downright confusing.  And I, like many people, am interested in learning more about wines, maybe in the hope of finding a cheap, underrated bargain at my local liquor store.  Luckily, there are myriad magazines and websites devoted entirely to the discussion, reviewing, and rating of wines.  One of the most popular of such magazines and websites is _Wine Enthusiast_.
 
+![my-first-image](serge-esteve-AZW8IbilGLg-unsplash.jpg)
+*Image by Serge Esteve*
+
 _Wine Enthusiast_ was founded in 1988 by Adam and Sybil Strum, and now has a circulation of more than 250,000.  One of the most popular features of the Wine Enthusiast magazine and website (www.winemag.com) are the wine reviews, which contain a wealth of information about each wine, both useful and not so useful.  Information found in a given review includes: the country and region of origin, the name of the vintner or winery, the variety (e.g. Pinot Noir), the price (arguably the most important feature), the name of the reviewer, and even the reviewer's _Twitter_ handle.  In addition to descriptive information, each review contains a rating or "points" awarded to the wine based on a variety of categories.  The ratings are purported to be on a 100-point scale, although in reality it is just a 20-point scale from 80 to 100 points.
 
 Wine Enthusiast's 100-point wine-scoring scale:
 
-- 98–100 – Classic
-- 94–97 – Superb
-- 90–93 – Excellent
-- 87–89 – Very good
-- 83–86 – Good
-- 80–82 – Acceptable
+- Classic: 98–100
+- Superb: 94–97
+- Excellent: 90–93
+- Very Good: 87–89
+- Good: 83–86
+- Acceptable: 80–82
 
 (https://www.wine-searcher.com/critics-17-wine+enthusiast)
 
@@ -40,7 +43,7 @@ _"Fragrant and fresh, this Grillo opens with alluring scents of acacia flower, b
 
 How many people know what acacia flowers and beeswax smell like?
 
-### Research Questions:
+### Questions of Interest:
 
 The aim of this analysis was to investigate a dataset consisting of nearly 130,000 wine reviews that were originally scraped (not by me) from the _Wine Enthusiast_ website in 2017 and posted on _Kaggle_ (www.kaggle.com).  A number of questions are investigated, including:
 
