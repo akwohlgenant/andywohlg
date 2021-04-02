@@ -51,7 +51,7 @@ time_format: '3:04 PM'
 address_format: en-us
 
 # Default image for social sharing and search engines. Place image in `static/img/` folder and specify image name here.
-sharing_image = "jr-korpa-0pSNLqAbBmg-unsplash.jpg"
+sharing_image: "jr-korpa-0pSNLqAbBmg-unsplash.jpg"
 
 # Site features
 
