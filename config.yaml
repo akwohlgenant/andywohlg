@@ -5,7 +5,7 @@ theme: "starter-academic"
 # This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
 
 title: "Andy Wohlgenant"
-baseurl: "https://happy-bartik-77fbaf.netlify.app"
+baseurl: "https://andywohlgenant.netlify.app"
 copyright: "&copy; Andy Wohlgenant {year}"
 
 ############################

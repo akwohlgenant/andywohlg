@@ -23,7 +23,7 @@ twitter: ''
 email: akwohlg@gmail.com
 phone: 
 address:
-  region: CA
+  region: 
   postcode: '95008'
   country: United States
   country_code: US
@@ -123,10 +123,7 @@ search:
     api_key: ''
     index_name: ''
     show_logo: false
-map:
-  provider: mapnik
-  api_key: ''
-  zoom: 15
+
 marketing:
   google_analytics: ''
   google_tag_manager: ''
