@@ -1,0 +1,408 @@
+---
+title: Wine Enthusiast Data Exploration
+author: Andy Wohlgenant
+date: '2021-04-02'
+slug: wine-enthusiast-data-exploration
+categories: []
+tags: []
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2021-04-02T14:21:51-07:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+### Introduction
+
+I like wine.  Lots of people like wine.  I tend to drink the same wines over and over again, from an embarrassingly small list of varieties and regions.  But there are hundreds of varieties of wine produced in dozens of regions in countries ranging from Armenia to Uruguay, with a dizzying array of naming conventions that can be downright confusing.  And I, like many people, am interested in learning more about wines, maybe in the hope of finding a cheap, underrated bargain at my local liquor store.  Luckily, there are myriad magazines and websites devoted entirely to the discussion, reviewing, and rating of wines.  One of the most popular of such magazines and websites is _Wine Enthusiast_.
+
+_Wine Enthusiast_ was founded in 1988 by Adam and Sybil Strum, and now has a circulation of more than 250,000.  One of the most popular features of the Wine Enthusiast magazine and website (www.winemag.com) are the wine reviews, which contain a wealth of information about each wine, both useful and not so useful.  Information found in a given review includes: the country and region of origin, the name of the vintner or winery, the variety (e.g. Pinot Noir), the price (arguably the most important feature), the name of the reviewer, and even the reviewer's _Twitter_ handle.  In addition to descriptive information, each review contains a rating or "points" awarded to the wine based on a variety of categories.  The ratings are purported to be on a 100-point scale, although in reality it is just a 20-point scale from 80 to 100 points.
+
+Wine Enthusiast's 100-point wine-scoring scale:
+
+- 98–100 – Classic
+- 94–97 – Superb
+- 90–93 – Excellent
+- 87–89 – Very good
+- 83–86 – Good
+- 80–82 – Acceptable
+
+(https://www.wine-searcher.com/critics-17-wine+enthusiast)
+
+Another feature of each review is a text description or "tasting notes"; these are often full of flowery adjectives and borderline ridiculous imagery to intended to evoke the actual experience of tasting a wine, with comments about the wine's appearance, aroma, flavor, etc.  Here is an example description, chosen at random from the dataset:
+
+_"Fragrant and fresh, this Grillo opens with alluring scents of acacia flower, beeswax and white stone fruit. The succulent palate offers creamy white peach, juicy nectarine, almond and mineral framed in tangy acidity. A note of chopped herb closes the lingering finish."_
+
+How many people know what acacia flowers and beeswax smell like?
+
+### Research Questions:
+
+The aim of this analysis was to investigate a dataset consisting of nearly 130,000 wine reviews that were originally scraped (not by me) from the _Wine Enthusiast_ website in 2017 and posted on _Kaggle_ (www.kaggle.com).  A number of questions are investigated, including:
+
+  * Which countries have the most reviewed wines?
+  
+  * Which varieties are the most reviewed?
+  
+  * What does the price distribution look like?  Is it a normal distribution, or is it more heavily skewed toward lower priced wines?
+  
+  * What about the distribution of wine ratings ("points")?
+  
+  * Is there any relationship between price of wine and its corresponding rating in points?  Are higher priced wines rated higher than cheap wines?
+  
+  * What are the most commonly used words in the wine descriptions?  How can those be visualized?
+
+These questions will be investigated by using a number of different statistical and graphical techniques using R.
+
+### Data
+
+As mentioned previously, the dataset for this research consists of a comma separated file downloaded from _Kaggle_, and comprises nearly 130,000 wine reviews that were scraped from the _Wine Enthusiast_ website (www.winemag.com) in 2017.  The data contain 14 variables:
+ 
+  * Unique identifier (numerical, column name "X")
+  * Country of origin
+  * Province (if country is US, this is the state of origin)
+  * Region (there are two region variables, *region_1* and *region_2*)
+  * Designation (this appears to be some kind of secondary descriptor)
+  * Title (generally the name of producer, variety and vintage)
+  * Description (text description or "tasting notes" for each wine)
+  * Variety (e.g. Pinot Noir or Chardonnay)
+  * Winery
+  * Price (US Dollars)
+  * Points (80-100 points)
+  * Taster name
+  * Taster Twitter handle
+ 
+Here is a link to download the data from _Kaggle_: 
+
+https://www.kaggle.com/zynicide/wine-reviews
+
+### Methods
+
+The dataset is investigated using a number of different descriptive, statistical, and graphical methods available in R and it's associated packages, including _dplyr_, _ggplot2_, _tm_, and others.  Methods used include:
+
+  * Grouping by country and variety and summarizing counts.
+  * Plotting histograms of wine price and points.
+  * Binning wines into price range bins (e.g. $10-$20, $20-$30, etc.) and visualizing price distribution
+  * Visualizing wine ratings and price bins as a way of addressing whether there is a relationship between price and rating points.
+  * Using word frequency counting and word cloud to visualize the frequency of words used in wine descriptions.
+  
+### Analysis
+
+First, the necessary packages are included for the analysis.
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr) # for a variety of analysis functions
+library(ggplot2) # for plotting
+```
+
+```{r message=FALSE, warning=FALSE}
+# the packages below are included to aid in construction of the word cloud, among other functions
+library(tm) 
+library(SnowballC)
+library(wordcloud)
+library(RColorBrewer)
+library(tidytext)
+library(stringr)
+library(tidyverse)
+library(tmap)
+library(plotly)
+```
+
+
+```{r message=FALSE, warning=FALSE}
+#install.packages("qdap")
+#install.packages("qdap", INSTALL_opts = "--no-multiarch")
+library(qdap)
+```
+
+
+Next, the dataset file is loaded into R and the dimensions inspected:
+
+```{r}
+wine <- read.csv("winemag_data_130k_v2.csv", encoding="UTF-8" )
+dim(wine)
+```
+
+The dataset contains 129,971 observations, and 14 variables.  Next the variable names are listed:
+
+```{r}
+colnames(wine)
+```
+
+Most of the variable names are pretty self-explanatory. Let's see what a "description" looks like for a randomly chosen wine in the dataset:
+
+```{r message=FALSE, warning=FALSE}
+wine$description[sample(1:129971, 1)]
+```
+
+This description is full of interesting adjectives and imagery meant to elicit in the reader a sense of the appearance, aroma, and flavor of the wine.  Later, the words used in the description variable will be more thoroughly investigated and visualized.
+
+Now the countries of origin will be investigated.  What are the unique countries in this dataset?
+
+```{r}
+countries <- unique(wine$country)
+length(countries)
+```
+So 44 unique countries are represented in the dataset.  Let's get a listing of these countries, and rank them by number of reviews and relative proportion of the dataset.  I will also calculate a running total of the proportions.
+
+```{r}
+wine_country <- wine %>%
+  filter(!is.na(country)) %>%
+  group_by(country) %>%
+  summarise(Count=n(), Prop=round(n()/(length(wine$country)), 4)) %>%
+  arrange(-Count) %>%
+  mutate(Cum_Prop = cumsum(Prop))
+wine_country
+```
+
+
+As we can see above in the Cum_Prop (cumulative proportion or running total of the proportions) column, the top 10 countries in terms of number of reviews account for 96% of the observations in the dataset, so I am going to filter out the countries with very few reviews before any plotting.
+
+```{r}
+wine_country <- wine_country %>%
+  filter(Prop>0.0005)
+```
+
+Below is a bar plot of review count by country after filtering.
+
+```{r}
+ggplot(data=wine_country, aes(x=reorder(country, -Count), y=Count)) + geom_bar(stat='identity', fill='dodgerblue') + labs(title="Wine Review Counts by Country",x="Country", y = "Count") + theme(axis.text.x=element_text(angle=90, hjust=1), plot.title = element_text(hjust = 0.5))
+```
+
+And here's a line plot of the cumulative sum of country proportions:
+
+```{r}
+ggplot(data=wine_country, aes(x=Cum_Prop, y=(reorder(country, -Cum_Prop)), group=1)) + geom_line(linetype='dashed') + geom_point() + labs(title='Cumulative Sum of Wine Review Proportion by Country', x="Cumulative Proportion", y="Country")
+```
+
+
+As we can see, the top few countries make up the bulk of the wine reviews in the dataset, and the counts tail off rapidly in the rest of the countries represented..
+
+Next, a similar analysis is performed with wine varieties:
+
+```{r}
+varieties <- unique(wine$variety)
+length(varieties)
+```
+
+The dataset contains 708 unique varieties of wine.  In order to visualize the varieties that make up the dataset, it is easiest to filter out wine varieties with the fewest reviews.  In this case, wines with fewer than 500 reviews will be removed before plotting the visualization.
+
+```{r}
+wine_varieties <- wine %>%
+  group_by(variety) %>%
+  summarise (count=n()) %>%
+  filter(count>500) %>%
+  arrange(-count)
+```
+
+
+```{r}
+ggplot(data=wine_varieties, aes(x=reorder(variety, -count), y=count)) + geom_bar(stat='identity', fill='dodgerblue') + labs(title="Wine Review Counts by Variety",x="Variety", y = "Count") + theme(axis.text.x=element_text(angle=90, hjust=1), plot.title = element_text(hjust = 0.5))
+```
+
+As we can see above, the four most reviewed wines are Pinot Noir, Chardonnay, Cabernet Sauvignon, and Red Blend. This distribution is not nearly as concentrated in a few varieties as was the case with the countries of origin.  
+
+Now let's look into the prices of wines, and the ratings or "points" awarded them.  First, let's filter out the very high priced wines that are out of virtually everyone's price range (over $500 a bottle).
+
+```{r}
+mod_price <- wine %>%
+  filter(price < 500)
+```
+
+
+```{r}
+ggplot(data=mod_price, aes(mod_price$price)) + geom_histogram(binwidth = 10, color='black', fill='dodgerblue') + labs(title="Histogram of Wine Prices",x="Price, USD", y = "Count") + theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+Here it apparent that the prices are highly concentrated in the low range (less than $50), with a long tail extending out into the higher prices.  We will do more thorough investigation of this observation.  Let's take a look at summary statistics for the wine prices.
+
+```{r}
+summary(wine$price)
+```
+
+As we can see from the summary statistics, the median wine price is only 25 US dollars, while the average is more than 35 bucks, dragged higher by those few, very expensive wines, up to a maximum of 3,300 dollars.  There are also almost 9,000 null values in the price variable.
+
+Let's get rid of those observations with null in the price variable before continuing our analysis.
+
+```{r}
+wine <- wine %>%
+  filter(!is.na(price))
+dim(wine)
+```
+
+That drops our dataset down to just under 121,000 observations; still plenty of data to work with.
+
+Now lets look at the distribution of the wine ratings represented by the variable _points_:
+
+```{r}
+ggplot(wine, aes(wine$points)) + geom_histogram(binwidth = 1, color='black', fill='dodgerblue') + labs(title="Histogram of Wine Points",x="Points", y = "Count") + theme(plot.title = element_text(hjust = 0.5))
+# the 'hjust' is added to center the title, otherwise left-justified
+```
+
+
+This distribution of points appears to be very nearly normal, with a peak around 87-88 points.  Below is a statistical summary:
+
+```{r}
+summary(wine$points)
+```
+
+In this near-normal distribution, the mean and median are very close to one another at 88 and 88.42 points, respectively.
+
+As an aside, let's see cheap Australian Rieslings with ratings of at least 90 points:
+
+```{r}
+wine %>%
+  filter(country=="Australia", variety=="Riesling", points>90, price<20) %>%
+  select(title, price, points) %>%
+  arrange(price)
+```
+
+And let's see Sauvignon Blancs with points greater than, say, 92 and price less than 30 dollars:
+
+```{r}
+wine %>%
+  filter(variety=='Sauvignon Blanc', points>92, price<30) %>%
+  select (title, price, points) %>%
+  arrange(price)
+```
+
+I'll be checking my local wine store for some of these bargains!
+
+We will now do a more thorough investigation of wine prices and compare them with the wine ratings to see if a relationship exists between the two variables.  To simplify this analysis, we will divide the wines into buckets or bins based on their price in $10 increments ($0-$10, $10-$20, etc.)  Then we can see the distribution of wine counts by bin.
+
+First we create a vector of the values to be the "breaks" between bins, and labels or "tags" to attach to each of these breaks.
+
+```{r}
+breaks1 <- c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100000)
+tags <- c('$0-10', '$10-20', '$20-30', '$30-40', '$40-50', '$50-60', '$60-70', '$70-80', '$80-90', '$90-100', '>$100')
+```
+
+Then we can use the _cut_ function to divide the price variable into bins separated by the breaks we just created, and summarize the counts for each bin:
+
+```{r}
+price_bins <- cut(wine$price, breaks=breaks1, include.lowest=TRUE, right=FALSE, labels=tags)
+summary(price_bins)
+```
+
+Above it is apparent that the largest bin of prices is the $10-$20 bin, which contains 36,560 observations.  We can visualize this distribution better with a bar graph:
+
+```{r}
+ggplot(data=as_tibble(price_bins), mapping=aes(x=value)) + geom_bar(fill="dodgerblue") + labs(title="Binned Wine Prices",x="Wine Price Bins, USD", y = "Count") + theme(plot.title = element_text(hjust = 0.5))
+```
+
+Next, we can use these price bins as a way to compare with wine points and investigate the question of whether a relationship exists between price and points. To do this we will first select just those columns, and then create a new column called 'price_bin' that will be assigned one of our previously defined bin tags depending on the price of the wine:
+
+```{r}
+wine_pp <- wine %>% select(price, points)
+wb_group <- as_tibble(wine_pp) %>%
+  mutate(price_bin = case_when(
+    price < 10 ~ tags[1],
+    price >= 10 & price < 20 ~ tags[2],
+    price >= 20 & price < 30 ~ tags[3],
+    price >= 30 & price < 40 ~ tags[4],
+    price >= 40 & price < 50 ~ tags[5],
+    price >= 50 & price < 60 ~ tags[6],
+    price >= 60 & price < 70 ~ tags[7],
+    price >= 70 & price < 80 ~ tags[8],
+    price >= 80 & price < 90 ~ tags[9],
+    price >= 90 & price < 100 ~ tags[10],
+    price >= 100 ~ tags[11]
+  ))
+```
+
+Let's see what that new column looks like:
+
+```{r}
+head(wb_group)
+```
+
+Now let's look at the distribution of wine ratings for each price bin with box plots (often called 'box-and-whisker' plots) for each bin.  I will also post the individual data points and 'jitter' them (shift them a small, random distance laterally) so that we can get a visual feel for the quantity and distribution of price points for each bin.
+
+```{r}
+ggplot(data=wb_group, mapping = aes(x=price_bin, y=points)) + geom_jitter(color='dodgerblue', alpha=0.1) + 
+  geom_boxplot(fill='bisque', color='black', alpha=0.3) + theme_minimal()+ labs(title="Boxplots of Wine Price Bins",x="Wine Price Bins, USD", y = "Points") + theme(plot.title = element_text(hjust = 0.5))
+```
+
+We can see from this plot not only the spread in the underlying ratings data for each price bin, but also the price-progression of the median ratings for all bins.  It is apparent that overall there is an increase in rating points associated with an increase in price.  This effect is more dramatic in the lower price bins from zero to 50 dollars, and the effect is flattened with higher prices, such that the median rating for a 90-100 dollar wine is not significantly different than that for a 70-80 dollar wine.
+
+This raises an interesting question: are the more expensive wines rated higher because they are better?  Or are the tasters biased by their own knowledge of the wine's price, and therefore more likely to rate the wine higher if it is more expensive?  This question can not be answered from these data, but the relationship could be further investigated using a dataset of blind tastings where the tasters are ignorant of the price when assigning the ratings.
+
+### Word Frequencies in Tasting Notes & Word Cloud
+
+The final question will now be investigated: what words are most commonly used to describe the wines in the description variable?  To do this, word frequencies will be counted, and a word cloud will be generated to visualize the results.
+
+First a _corpus_ is created, which is a collection of natural language text.  In this case, it is created from the _description_ column of the dataset.
+
+```{r}
+wine_corpus = Corpus(VectorSource(wine$description))
+```
+
+Next the corpus is edited to remove upper case letter, numbers, punctuation, and common words that don't yield any insights (e.g. "the").
+
+```{r}
+nowords <- c("the", "and", "wine", "with", "this", "flavors", "its", "that", "has", "but", "are", "offers", "more", "from")
+```
+
+
+```{r message=FALSE, warning=FALSE}
+wine_corpus = tm_map(wine_corpus, content_transformer(tolower))
+wine_corpus = tm_map(wine_corpus, removeNumbers)
+wine_corpus = tm_map(wine_corpus, removePunctuation)
+wine_corpus = tm_map(wine_corpus, removeWords, nowords)
+wine_corpus =  tm_map(wine_corpus, stripWhitespace)
+```
+```{r}
+inspect(wine_corpus[846])
+```
+
+An inspection above the description for element number 846 in the corpus shows that the unnecessary features were removed.
+
+Next, I create a document-term matrix for the corpus:
+
+```{r}
+wine_dtm <- DocumentTermMatrix(wine_corpus)
+wine_dtm = removeSparseTerms(wine_dtm, 0.99)
+```
+
+Let's check out the dimensions of the document-term matrix:
+
+```{r}
+dim(wine_dtm)
+```
+
+Then create and sort a dataframe of the sums for each column of the document-term matrix.
+
+```{r}
+freq = data.frame(freqs=sort(colSums(as.matrix(wine_dtm)), decreasing=TRUE))
+head(freq, 10)
+```
+
+And finally, generate the word cloud from the frequency dataframe.
+
+```{r message=FALSE, warning=FALSE}
+wordcloud(rownames(freq), freq[,1], max.words=50, colors=brewer.pal(1, "Dark2"))
+```
+
+
+The word cloud above is limited to 50 words, but gives a good idea of the kinds of words that are frequently used in the wine descriptions.  While additional fine-tuning might yield more insights (for instance, I could get rid of words like "some" that aren't telling us much), it might be more interesting to divide the wines up by variety and see how the word frequencies differ.  It may even be possible to use the words from the descriptions to predict the variety of wine.  I will save that question for the next project.
+
+### Conclusions
+
+The results of this analysis effectively answered the research questions posed:
+
+  * The countries of origin were highly concentrated in a few countries, with about 74% of the reviews coming from the United States, France and Italy.
+  
+  * The wine varieties were somewhat more evenly distributed than the countries, with the most common wines being Pinot Noir, Chardonnay, and Cabernet Sauvignon.
+  
+  * The wine prices were highly concentrated in the $10 to $50 dollar range, with a long tail exending up in price to a maximum price of $3,300.
+  
+  * The wine ratings or "points" were near normally distributed, with mean and median values of approximately 88 points.
+  
+  * There was a relationship noted between price and points, such that an increase in price is associated with an increase in awarded points.  This effect was more dramatic in the lower price bins (0-$50) than in the higher price range, where increase in price more than about 70 dollars did not appear to be associated with significantly higher ratings.
+  
+  * And finally, the most frequently used words in the wine desription column were calculated and visualized using a word cloud.  This provided an interesting way of visualizing the most common words in the descriptions, but to really leverage the description text, we might want to take things a bit further and try to use the language to predict something like the wine variety.
