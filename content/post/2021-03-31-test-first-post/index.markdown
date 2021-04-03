@@ -22,11 +22,6 @@ projects: []
 This is my first post, I will just be plotting some random stuff to see if it works.  I will also be testing a function I copied from Julia Silge's *silgelib* package to make my plots look as nice as hers look in her post on Super Bowl Commercials and Bootstrap Confidence Intervals.
 
 
-```r
-knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, 
-                      echo = TRUE, dpi = 300, cache.lazy = FALSE,
-                      tidy = "styler", fig.width = 8, fig.height = 5)
-```
 
 
 
@@ -46,7 +41,6 @@ summary(Orange)
 
 
 ```r
-library(ggplot2)
 oplot <- ggplot(Orange, aes(x = age, 
                    y = circumference, 
                    colour = Tree)) +
@@ -57,13 +51,7 @@ oplot <- ggplot(Orange, aes(x = age,
 oplot
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="2400" />
-
-
-
-```r
-library(tidyverse)
-```
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="2400" />
 
 
 
@@ -114,7 +102,7 @@ ggplot(diamonds, aes(carat, price, color = clarity)) +
        subtitle = "Made prettier with Julia Silge's theme_plex() function") + theme_plex()
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="2400" />
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" width="2400" />
 
 
 
@@ -132,5 +120,5 @@ youtube %>%
   labs(x = NULL, y = "% of commercials") + theme_plex()
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="2400" />
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="2400" />
 
