@@ -17,6 +17,14 @@ image:
 projects: []
 ---
 
+
+```r
+knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, 
+                      echo = TRUE, dpi = 300, cache.lazy = FALSE,
+                      tidy = "styler", fig.width = 8, fig.height = 5)
+```
+
+
 ## My First R Markdown Post
 
 This is my first post, I will just be plotting some random stuff to see if it works.  Here goes...
@@ -39,13 +47,6 @@ summary(Orange)
 
 ```r
 library(ggplot2)
-```
-
-```
-## Warning: package 'ggplot2' was built under R version 4.0.4
-```
-
-```r
 oplot <- ggplot(Orange, aes(x = age, 
                    y = circumference, 
                    colour = Tree)) +
@@ -56,20 +57,80 @@ oplot <- ggplot(Orange, aes(x = age,
 oplot
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="2400" />
 
 
 
+```r
+library(tidyverse)
+```
 
 
 
+```r
+youtube <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
+```
 
 
 
+```r
+# This is a plotting function from Julia Silge's package silgelib
+theme_plex <- function(base_size = 11,
+                       strip_text_size = 12,
+                       strip_text_margin = 5,
+                       subtitle_size = 13,
+                       subtitle_margin = 10,
+                       plot_title_size = 16,
+                       plot_title_margin = 10,
+                       ...) {
+  ret <- ggplot2::theme_minimal(base_family = "IBMPlexSans",
+                                base_size = base_size, ...)
+  ret$strip.text <- ggplot2::element_text(
+    hjust = 0, size = strip_text_size,
+    margin = ggplot2::margin(b = strip_text_margin),
+    family = "IBMPlexSans-Medium"
+  )
+  ret$plot.subtitle <- ggplot2::element_text(
+    hjust = 0, size = subtitle_size,
+    margin = ggplot2::margin(b = subtitle_margin),
+    family = "IBMPlexSans"
+  )
+  ret$plot.title <- ggplot2::element_text(
+    hjust = 0, size = plot_title_size,
+    margin = ggplot2::margin(b = plot_title_margin),
+    family = "IBMPlexSans-Bold"
+  )
+  ret
+}
+```
 
 
 
+```r
+ggplot(diamonds, aes(carat, price, color = clarity)) +
+  geom_point(alpha = 0.7) +
+  facet_wrap(~cut) +
+  labs(title = "Diamonds Data",
+       subtitle = "Made prettier with Julia Silge's theme_plex() function") + theme_plex()
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="2400" />
 
 
 
+```r
+youtube %>%
+  select(year, funny:use_sex) %>%
+  pivot_longer(funny:use_sex) %>%
+  group_by(year, name) %>%
+  summarise(prop = mean(value)) %>%
+  ungroup() %>%
+  ggplot(aes(year, prop, color = name)) +
+  geom_line(size = 1.2, show.legend = FALSE) +
+  facet_wrap(vars(name)) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(x = NULL, y = "% of commercials") + theme_plex()
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="2400" />
 
