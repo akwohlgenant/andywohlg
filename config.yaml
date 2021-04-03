@@ -6,7 +6,7 @@ theme: "starter-academic"
 
 title: "Andy Wohlgenant"
 baseurl: "https://andywohlgenant.netlify.app"
-copyright: "&copy; Andy Wohlgenant {year}"
+copyright: "&copy; Andy Wohlgenant {year}, Photo by Jr Korpa on Unsplash"
 
 ############################
 ## LANGUAGE
