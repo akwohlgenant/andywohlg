@@ -19,7 +19,7 @@ projects: []
 
 ## My First R Markdown Post
 
-This is my first post, I will just be plotting some random stuff to see if it works.  I will also be testing a function I copied from Julia Silge's *silgelib* package to make my plots look as nice as hers look in her post on Super Bowl Commercials and Bootstrap Confidence Intervals.
+This is my first post, and I will just be plotting some random stuff to see if it works.  I will also be testing a function I copied from Julia Silge's *silgelib* package to make my plots look as nice as hers look in her post on Super Bowl Commercials and Bootstrap Confidence Intervals.
 
 
 
@@ -53,12 +53,14 @@ oplot
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="2400" />
 
+Next I will load the data used by Julia Silge in her post on March 4, 2021, **Bootstrap confidence intervals for #TidyTuesday Super Bowl commercials**.  First I will read in the dataset from the TidyTuesday github repository.
 
 
 ```r
 youtube <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
 ```
 
+I noticed that Julia's plots looked really nice - simple but clear and uncluttered.  I also noticed a call in her R setup to a theme called *theme_plex* that I didn't recognize.  I looked it up, and found it is actually from a package Julia built called *silgelib*.  Here's the function separated out from the package.
 
 
 ```r
@@ -92,6 +94,7 @@ theme_plex <- function(base_size = 11,
 }
 ```
 
+And here's an example plot of the diamonds data using the theme_plex() function defined above.
 
 
 ```r
@@ -104,6 +107,7 @@ ggplot(diamonds, aes(carat, price, color = clarity)) +
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" width="2400" />
 
+Finally, here's a duplicate of the plot in Julia's post.  Isn't that a nice-looking, clear plot?
 
 
 ```r
