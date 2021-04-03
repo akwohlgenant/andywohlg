@@ -17,6 +17,10 @@ image:
 projects: []
 ---
 
+## My First R Markdown Post
+
+This is my first post, I will just be plotting some random stuff to see if it works.  I will also be testing a function I copied from Julia Silge's *silgelib* package to make my plots look as nice as hers look in her post on Super Bowl Commercials and Bootstrap Confidence Intervals.
+
 
 ```r
 knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, 
@@ -24,10 +28,6 @@ knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE,
                       tidy = "styler", fig.width = 8, fig.height = 5)
 ```
 
-
-## My First R Markdown Post
-
-This is my first post, I will just be plotting some random stuff to see if it works.  Here goes...
 
 
 ```r
