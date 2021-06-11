@@ -220,11 +220,12 @@ logs_noNA %>%
   select(`Well Name`, Depth, Cluster) %>%
   ggplot(aes(x=Cluster, y=Depth)) + 
   geom_path() + 
+  scale_x_continuous(breaks=c(1,2,3,4,5,6,7,8,9)) +
   theme_bw() + 
   theme(legend.position = "none") +
   scale_y_reverse() + 
   facet_wrap(~ `Well Name`, nrow=1) +
-  labs(title = "", x = "Cluster", y="")
+  labs(x = "Cluster", y="")
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-1.png" width="672" />
