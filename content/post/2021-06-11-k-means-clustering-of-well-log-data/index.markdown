@@ -6,7 +6,7 @@ slug: k-means-clustering-of-well-log-data
 categories: []
 tags: []
 subtitle: ''
-summary: ''
+summary: "Use the k-means clustering algorithm to find groupings of similar well log data from real wells in Kansas."
 authors: []
 lastmod: '2021-06-11T10:29:28-07:00'
 featured: no
@@ -167,7 +167,10 @@ set.seed(90210)  #set.seed(13)
 logs_9clust <- kmeans(x=logs_train, centers=9)
 ```
 
-# Visualize the results
+
+
+## Visualize the results
+
 Next I can plot the kmeans object with help from the `plot.kmeans` function from the `useful` package.  The data will be projected into two dimensions for visualization.
 
 
@@ -226,14 +229,16 @@ As we can see from this plot, there isn't a great one-to-one match between any o
 logs_noNA %>%
   filter(`Well Name` %in% c("NEWBY", "NOLAN", "SHANKLE", "SHRIMPLIN")) %>%
   filter(Depth > 2800 & Depth < 3000) %>%
-  select(`Well Name`, Depth, Cluster) %>%
+  select(`Well Name`, Depth, Cluster, GR) %>%
+  #mutate(GR = GR/20) %>%
   ggplot(aes(x=Cluster, y=Depth)) + 
   geom_path() + 
+  #geom_path(aes(x=GR, y=Depth), color="red") +
   scale_x_continuous(breaks=c(1,2,3,4,5,6,7,8,9)) +
   theme_bw() + 
   theme(legend.position = "none") +
   scale_y_reverse() + 
-  facet_wrap(~ `Well Name`, nrow=1) +
+  facet_wrap(~ `Well Name`, nrow=1, scale="free_x") +
   labs(x = "Cluster", y="")
 ```
 
