@@ -17,9 +17,12 @@ image:
 projects: []
 ---
 
+![my-first-image](matt-artz-layers-unsplash.jpg)
+
 *Photo by Matt Artz on Unsplash*
 
-# Introduction
+## Introduction
+
 About a year ago, I posted about using the k-means clustering algorithm in Python for well log data from oil and gas fields. Since then, I’ve been spending some time learning R, so I wanted to post a companion piece showing how to do some of the same things using R. The general process is very similar, and I will use the same data as in the previous post. Along the way, I will demonstrate how little code it takes to do some of the same things in R.
 
 I want to thank **Jared Lander** and his great book *R for Everyone*. The basic workflow for k-means clustering in R that I show here is pretty much straight out of his book, with some minor tweaks around displaying the results in a format that is familiar to folks who’ve worked in the oil patch.
@@ -31,7 +34,10 @@ library(tidyverse)
 library(useful)
 ```
 
-# Import the data, and plot the logs
+
+
+## Import the data and plot the logs
+
 Next, I’ll read in the data using the `read_csv()` function from the tidyverse package, and I'll take look at the format of the variables and the first few values for each.
 
 These data can be downloaded from the SEG Github: https://github.com/seg/tutorials-2016/tree/master/1610_Facies_classification.
@@ -82,7 +88,10 @@ ggplot(shrimplin_long, aes(x=curve_value, y=Depth)) +
 
 That looks pretty good.  Now I'll move on to the clustering.
 
-# K-means clustering
+
+
+## K-means clustering
+
 First I'll get rid of any null values in the data set, and then I'll select only the numerical variables for clustering.  I will leave out *NM_M* and *RELPOS* for clustering, since these are more interpretive than the downhole geophysical logs.
 
 ```{r}
