@@ -23,11 +23,15 @@ projects: []
 
 ## Introduction
 
-About a year ago, I posted about using the k-means clustering algorithm in Python for well log data from oil and gas fields. Since then, I’ve been spending some time learning R, so I wanted to post a companion piece showing how to do some of the same things using R. The general process is very similar, and I will use the same data as in the previous post. Along the way, I will demonstrate how little code it takes to do some of the same things in R.
+The k-means clustering algorithm is an *unsupervised* classification algorithm, meaning it does not need to train on labeled data.  Rather, the algorithm divides observations into groups based on a distance metric.  For geoscientists working in the oil and gas business, any tool that can group similar subsurface measurements can help to make sense of the large amount of data that needs to be sifted through to make sense of the subsurface, predict where to drill next, and calculate an estimate of how much hydrocarbon has been discovered.
+
+Well log data are geophysical samples of the subsurface measured in boreholes, and these measurements tell geoscientists something about the physical properties of the material a well was drilled through.  Grouping these measurements based on their physical properties can help to organize these subsurface data into logical assemblages that can be related back to the geology of the area, both within and between wells.
+
+About a year ago, I posted on my old [website](https://akwohlgenant.github.io) about using the k-means clustering algorithm in Python for well log data from oil and gas fields. Since then, I’ve been spending some time learning R, so I wanted to post a companion piece showing how to do some of the same things using R. The general process is very similar, and I will use the same data as in the previous post. Along the way, I will demonstrate how little code it takes to do some of the same things in R.
 
 I want to thank **Jared Lander** and his great book *R for Everyone*. The basic workflow for k-means clustering in R that I show here is pretty much straight out of his book, with some minor tweaks around displaying the results in a format that is familiar to folks who’ve worked in the oil patch.
 
-First step, import the packages we will need. For now, all we really need are the `tidyverse` and `useful` packages.  The `useful` package is, well, useful!  It contains some handy tools, such as a function for plotting the results of K-means clustering.
+First step, import the packages we will need. For now, all we really need are the `tidyverse` and `useful` packages.  The `useful` package is, well, useful!  It contains some handy tools, such as a function for plotting the results of k-means clustering.
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -40,14 +44,14 @@ library(useful)
 
 Next, I’ll read in the data using the `read_csv()` function from the tidyverse package, and I'll take look at the format of the variables and the first few values for each.
 
-These data can be downloaded from the SEG Github: https://github.com/seg/tutorials-2016/tree/master/1610_Facies_classification.
+These data can be downloaded from the [SEG Github:](https://github.com/seg/tutorials-2016/tree/master/1610_Facies_classification).  SEG is the *Society of Exploration Geophysicists*.
 
 ```{r, message=FALSE}
 logs <- read_csv("kgs_log_data.csv")
 glimpse(logs)
 ```
 
-Now I will plot the logs for one of the wells. With `ggplot`, I can use the `geom_path()` geometric object in the `ggplot` call which will connect the data points in order of increasing depth.  I’ll also reverse the y-scale so that depth is increasing downward. Let’s try this first for just one well, *SHRIMPLIN*, and one log curve, *GR*.
+Now I will plot the logs for one of the wells. With `ggplot`, I can use the `geom_path()` geometric object in the `ggplot` call which will connect the data points in order of increasing depth.  I’ll also reverse the y-scale so that depth is increasing downward. Let’s try this first for just one well, *SHRIMPLIN* (because I like the name), and one log curve, *GR*, which is the *gamma-ray* log.
 
 ```{r}
 shrimplin <- logs %>% filter(`Well Name` == "SHRIMPLIN") %>% select(Depth, GR, ILD_log10, DeltaPHI, PHIND, PE)
@@ -55,9 +59,9 @@ shrimplin <- logs %>% filter(`Well Name` == "SHRIMPLIN") %>% select(Depth, GR, I
 ggplot(shrimplin, aes(x=GR, y=Depth)) + geom_path() + theme_bw() + scale_y_reverse()
 ```
 
-Now I can take advantage of the `facet_wrap()` option in ggplot to plot each curve side-by-side.  For this to work, I will need to have each curve name as a variable rather than as individual variables in separate columns.  This can be accomplished using the `pivot_longer()` function, originally from the `tidyr` package, and included with `tidyverse`.
+Now I can take advantage of the `facet_wrap()` option in *ggplot* to plot each curve side-by-side.  For this to work, I will need to have each curve name as a value in a single variable rather than as individual variables in separate columns.  This can be accomplished using the `pivot_longer()` function, originally from the `tidyr` package, and included with `tidyverse`.
 
-With `pivot_longer`, I'll be making the dataframe *longer* (more rows) and losing some columns (the individual log curve columns) by combining all curve names into one column (*curve_name*) and all the curve values into one column (*curve_value*).  I'll also *free* the x-scales so that each curve can have its own scale rather than sharing one common scale.
+With `pivot_longer`, I can make the dataframe *longer* (more rows) and lose some columns (the individual log curve columns) by combining all curve names into one column (*curve_name*) and all the curve values into one column (*curve_value*).  When I plot, in the `facet_wrap` call I'll also *free* the x-scales so that each curve can have its own scale rather than sharing one common scale.
 
 ```{r}
 shrimplin_long <- pivot_longer(data=shrimplin, cols=2:6, names_to = "curve_name", values_to = "curve_value")
