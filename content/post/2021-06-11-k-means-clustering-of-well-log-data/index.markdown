@@ -1,5 +1,5 @@
 ---
-title: K-Means Clustering of Well Log Data
+title: K-Means Clustering of Well Log Data Again, But This Time with R
 author: Andy Wohlgenant
 date: '2021-06-11'
 slug: k-means-clustering-of-well-log-data
@@ -16,7 +16,6 @@ image:
   preview_only: no
 projects: []
 ---
-
 ![my-first-image](matt-artz-layers-unsplash.jpg)
 
 *Photo by Matt Artz on Unsplash*
