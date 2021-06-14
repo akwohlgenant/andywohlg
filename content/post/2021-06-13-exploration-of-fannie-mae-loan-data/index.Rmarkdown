@@ -256,6 +256,8 @@ loans %>%
   coord_flip()
 ```
 
+This tells an interesting story about how black or African American and Hispanic or Latino borrowers tend to carry riskier mortgages, which are often saddled with higher interest rates, as compared to whites and Asian borrowers.  Since loan-to-value ratio is a measure of how much is being borrowed relative to the assessed value of the home, a higher number generally means the borrower had less to put down as a down-payment, and often incurs a higher interest rate and additional private mortgage insurance.  Native Hawaiian and other Pacific Islander borrowers have a similar profile to white and Asian borrowers in this plot, with a tendency toward lower loan-to-value ratios.
+
 
 
 
