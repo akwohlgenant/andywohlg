@@ -16,6 +16,9 @@ image:
   preview_only: no
 projects: []
 ---
+![my-first-image](blake-wheeler-unsplash.jpg)
+
+*Photo by Blake Wheeler on Unsplash*
 
 ## Introduction
 
@@ -192,7 +195,7 @@ loans <-
   )
 ```
 
-Whew, that took a while to get to run correctly (I kept finding missing commas that were holding things up).  The last thing I will do today is check the data for null values.
+Whew, that took a while to get to run correctly (I kept finding missing commas that were holding things up). Now I'll do a quick check of the data for null values.
 
 
 ```r
@@ -279,6 +282,32 @@ loans %>% filter(borr_race_ethn != "Not available/not applicable") %>%
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
+That's pretty interesting: I didn't necessarily expect to see Asian borrowers with the lowest proportion of high loan-to-value mortgages.  It's pretty clear to compare the length of the bars this way, but let's also plot the bars side-by-side instead to see if it's easier to compare the bar lengths that way.
+
+
+```r
+loans %>%
+  filter(borr_race_ethn != "Not available/not applicable") %>%
+  count(borr_race_ethn, loan_to_value) %>%
+  group_by(borr_race_ethn) %>%
+  mutate(Sum = sum(n)) %>%
+  mutate(Proportion = n / Sum) %>%
+  ggplot(aes(x = borr_race_ethn, y = Proportion, fill = loan_to_value)) +
+  geom_col(position = "dodge") +
+  scale_y_continuous(labels = scales::percent_format(accuracy=1)) +
+  scale_fill_manual(name = "Loan to Value Ratio", 
+                    values = wes_palette("Moonrise3", n =5)) +
+  #scale_fill_discrete_sequential("Purple-Oran", rev=FALSE) +
+  theme_minimal() +
+  theme(axis.title.y = element_blank()) +
+  labs(title = "Loan-to-value ratio by race, national origin and ethnicity",
+       x = "", y="",
+       caption = "A higher proportion of black and Hispanic 
+       borrowers have high loan-to-value mortgages.") +
+  coord_flip()
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 
 
