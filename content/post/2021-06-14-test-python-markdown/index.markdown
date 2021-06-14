@@ -1,11 +1,20 @@
 ---
-title: "K-Means Clustering of Well Log Data"
-date: 2020-07-08
-tags: [k-means, clustering, unsupervised learning, well log, geophysical, python]
-header:
- image: "/images/zbynek-burival-GrmwVnVSSdU-unsplash.jpg"
-excerpt: "Can the k-means clustering algorithm be used on oil-field well log data?"
-mathjax: "true"
+title: K-Means Clustering of Well Log Data with Python
+author: Andy Wohlgenant
+date: '2020-07-08'
+slug: python-well-log-clustering
+categories: []
+tags: []
+subtitle: ''
+summary: 'This notebook illustrates and application of the k-means clustering algorithm in Python.'
+authors: []
+lastmod: '2020-07-08T15:25:41-07:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
 ---
 
 ### Table of Contents
@@ -21,7 +30,7 @@ mathjax: "true"
 <a id='intro'></a>
 ## Introduction:
 
-This notebook will illustrate an application of the **k-means clustering** machine learning algorithm to geological and geophysical analyses in the oil and gas industry. Specifically, I will demonstrate an application of clustering to well log data, which are generally the most prevalent data available in oil and gas fields. In many areas, well log data may be the _only_ subsurface data available for analysis.
+This notebook illustrates an application of the **k-means clustering** machine learning algorithm to geological and geophysical analyses in the oil and gas industry. Specifically, I will demonstrate an application of clustering to well log data, which are generally the most prevalent data available in oil and gas fields. In many areas, well log data may be the _only_ subsurface data available for analysis.
 
 _What are well log data?_  Simply put, a well log is a detailed record of the material a well was drilled through.  The most basic well logs consist of written descriptions of the cuttings material brought up to the surface while drilling.  While these qualitative data can be very useful in establishing rock type and age, we also want to collect quantitative measurements of the rock layers drilled through.  To collect these measurements, special tools are lowered into the borehole, either on the drillstring or on wireline.  These tools measure and record a continuous record of certain properties of the rock or sediments lining the borehole.  These measurements, or _geophysical well logs_,  are the data we will be using as input to the clustering algorithm.  
 
