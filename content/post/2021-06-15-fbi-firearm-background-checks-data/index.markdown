@@ -48,55 +48,9 @@ nics <- read_csv("fbi_data.csv")
 ```
 
 ```r
-dim(nics)
-```
-
-```
-## [1] 14905    27
-```
-
-```r
-colnames(nics)
-```
-
-```
-##  [1] "month"                     "state"                    
-##  [3] "permit"                    "permit_recheck"           
-##  [5] "handgun"                   "long_gun"                 
-##  [7] "other"                     "multiple"                 
-##  [9] "admin"                     "prepawn_handgun"          
-## [11] "prepawn_long_gun"          "prepawn_other"            
-## [13] "redemption_handgun"        "redemption_long_gun"      
-## [15] "redemption_other"          "returned_handgun"         
-## [17] "returned_long_gun"         "returned_other"           
-## [19] "rentals_handgun"           "rentals_long_gun"         
-## [21] "private_sale_handgun"      "private_sale_long_gun"    
-## [23] "private_sale_other"        "return_to_seller_handgun" 
-## [25] "return_to_seller_long_gun" "return_to_seller_other"   
-## [27] "totals"
-```
-
-```r
-head(nics)
-```
-
-```
-## # A tibble: 6 x 27
-##   month   state      permit permit_recheck handgun long_gun other multiple admin
-##   <chr>   <chr>       <dbl>          <dbl>   <dbl>    <dbl> <dbl>    <dbl> <dbl>
-## 1 2021-05 Alabama     28248            317   21664    12423  1334      865     0
-## 2 2021-05 Alaska        307              7    3368     2701   323      208     0
-## 3 2021-05 Arizona     21767            695   20984     9259  1676     1010     0
-## 4 2021-05 Arkansas     7697           1171    8501     5072   422      340     3
-## 5 2021-05 California  20742          11514   40160    25824  5576        0     0
-## 6 2021-05 Colorado    11105              3   21819    12848  1987     1980     0
-## # ... with 18 more variables: prepawn_handgun <dbl>, prepawn_long_gun <dbl>,
-## #   prepawn_other <dbl>, redemption_handgun <dbl>, redemption_long_gun <dbl>,
-## #   redemption_other <dbl>, returned_handgun <dbl>, returned_long_gun <dbl>,
-## #   returned_other <dbl>, rentals_handgun <dbl>, rentals_long_gun <dbl>,
-## #   private_sale_handgun <dbl>, private_sale_long_gun <dbl>,
-## #   private_sale_other <dbl>, return_to_seller_handgun <dbl>,
-## #   return_to_seller_long_gun <dbl>, return_to_seller_other <dbl>, totals <dbl>
+#dim(nics)
+#colnames(nics)
+#head(nics)
 ```
 
 Let's see what date range these data cover. It looks like the `month` variable needs to be converted to a proper date format first.
@@ -129,7 +83,7 @@ nics %>%
   filter(!is.na(long_gun)) %>%
   group_by(date) %>% 
   summarize(Total = sum(long_gun)) %>%
-  ggplot(aes(x=date, y=Total)) + geom_line(color="blue") +
+  ggplot(aes(x=date, y=Total)) + geom_line() +
   theme_minimal() +
   labs(title="Total Long Gun Background Checks by Month",
        x="Date", y="Total Background Checks")
@@ -167,7 +121,7 @@ nics %>%
   filter(!is.na(long_gun), date>"1998-11-01") %>%
   group_by(date) %>% 
   summarize(Total = sum(long_gun)) %>%
-  ggplot(aes(x=date, y=Total)) + geom_line(color="blue") +
+  ggplot(aes(x=date, y=Total)) + geom_line() +
   theme_minimal() +
   labs(title="Total Long Gun Background Checks by Month",
        x="Date", y="Total Background Checks")
@@ -245,78 +199,36 @@ ggplot(nics_byDate, aes(x=date, y=long_gun_diff)) +
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
-Decompose the time series into *seasonal*, *trend*, and *irregular* components using *loess*.
+Decompose the time series into *seasonal*, *trend*, and *remainder* components using *loess*.
 
 
 ```r
 # Make a time series object of the total long gun checks
 nics_ts <- ts(nics_byDate$Total, frequency=12, start=c(1999, 1))
-#nics_ts
+
 # Decompose using stl
 decomposed <- stl(nics_ts, s.window='periodic')
-names(decomposed)
-```
 
-```
-## [1] "time.series" "weights"     "call"        "win"         "deg"        
-## [6] "jump"        "inner"       "outer"
-```
-
-```r
 # Plot the decomposed parts
 #autoplot(decomposed)
 # Not sure why that didn't work
 
-# Make data frame
+# Make data frame to plot with ggplot
 df <- as.data.frame(decomposed$time.series)
-head(df)
-```
 
-```
-##     seasonal    trend  remainder
-## 1  -47931.93 376453.3 -18606.377
-## 2  -30926.40 385552.6  -2215.157
-## 3   16192.81 394651.8 -34069.621
-## 4  -73539.67 402635.2  -5873.544
-## 5 -133931.60 410618.6   4746.987
-## 6 -129781.76 417334.2  -1221.426
-```
-
-```r
+# Add date column
 df$date <- nics_byDate$date
-head(df)
-```
 
-```
-##     seasonal    trend  remainder       date
-## 1  -47931.93 376453.3 -18606.377 1999-01-01
-## 2  -30926.40 385552.6  -2215.157 1999-02-01
-## 3   16192.81 394651.8 -34069.621 1999-03-01
-## 4  -73539.67 402635.2  -5873.544 1999-04-01
-## 5 -133931.60 410618.6   4746.987 1999-05-01
-## 6 -129781.76 417334.2  -1221.426 1999-06-01
-```
-
-```r
+# Pivot longer for faceting by component
 df <- df %>% pivot_longer(cols = 1:3, names_to = "component", values_to = "value")
-head(df)
-```
 
-```
-## # A tibble: 6 x 3
-##   date       component   value
-##   <date>     <chr>       <dbl>
-## 1 1999-01-01 seasonal  -47932.
-## 2 1999-01-01 trend     376453.
-## 3 1999-01-01 remainder -18606.
-## 4 1999-02-01 seasonal  -30926.
-## 5 1999-02-01 trend     385553.
-## 6 1999-02-01 remainder  -2215.
-```
-
-```r
 # Plot the decomposed parts
-ggplot(df, aes(x=date, y=value)) + geom_line() + facet_wrap(~component, nrow=3, ncol=1)
+ggplot(df, aes(x=date, y=value)) + 
+  geom_line() + 
+  theme_minimal() + 
+  labs(title="Decomposition of Total Long Gun Background Checks",
+       x = "Date", y="") +
+  facet_wrap(~component, nrow=3, ncol=1)
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" />
