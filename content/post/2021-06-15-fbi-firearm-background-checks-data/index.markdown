@@ -16,10 +16,11 @@ image:
   preview_only: no
 projects: []
 ---
-
 ![my-first-image](seth-schulte-unsplash.jpg)
 
-## Introduction
+*Photo by Seth Schulte on Unsplash*
+
+## FBI Background Check Data
 
 These data are from the FBI National Instant Criminal Background Check System (NICS).  You can read more about it on the FBI [website](https://www.fbi.gov/services/cjis/nics).  The data I work with in this post are actually from the *BuzzFeedNews* Github located [here](https://github.com/BuzzFeedNews/nics-firearm-background-checks).  There you can also read about how the original data provided by the FBI in PDF format are parsed into comma separated (CSV) format.
 
@@ -34,24 +35,12 @@ library(zoo)  # for rollmean funtion
 
 ```r
 nics <- read_csv("fbi_data.csv")
-```
-
-```
-## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   .default = col_double(),
-##   month = col_character(),
-##   state = col_character()
-## )
-## i Use `spec()` for the full column specifications.
-```
-
-```r
 #dim(nics)
 #colnames(nics)
 #head(nics)
 ```
+
+## Exploration
 
 Let's see what date range these data cover. It looks like the `month` variable needs to be converted to a proper date format first.
 
@@ -199,7 +188,9 @@ ggplot(nics_byDate, aes(x=date, y=long_gun_diff)) +
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
-Decompose the time series into *seasonal*, *trend*, and *remainder* components using *loess*.
+## Decomposition of time-series data
+
+Now let's use the `ts` and `stl` functions from `stats` to decompose the time series into *seasonal*, *trend*, and *remainder* components using *loess*.
 
 
 ```r
@@ -208,10 +199,6 @@ nics_ts <- ts(nics_byDate$Total, frequency=12, start=c(1999, 1))
 
 # Decompose using stl
 decomposed <- stl(nics_ts, s.window='periodic')
-
-# Plot the decomposed parts
-#autoplot(decomposed)
-# Not sure why that didn't work
 
 # Make data frame to plot with ggplot
 df <- as.data.frame(decomposed$time.series)
