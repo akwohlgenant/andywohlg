@@ -232,8 +232,10 @@ loans %>% filter(borr_race_ethn != "Not available/not applicable") %>%
   ggplot() +
   geom_bar(aes(x = borr_race_ethn, fill = loan_to_value), position = "fill") +
   theme_minimal() +
-  labs(title="Race, national origin, or ethnicity and loan-to-value ratio",
-       x="", y="Proportion", fill="Loan-to-value ratio") +
+  labs(title = "Race, national origin, or ethnicity and loan-to-value ratio",
+       x = "",
+       y = "Proportion",
+       fill = "Loan-to-value ratio") +
   coord_flip()
 ```
 
