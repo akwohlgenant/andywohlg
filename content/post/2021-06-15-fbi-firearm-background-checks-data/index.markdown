@@ -180,7 +180,7 @@ Calculate the moving average and plot.
 
 ```r
 nics_byDate <- nics %>% 
-  filter(!is.na(long_gun), date>"1998-11-01") %>%
+  filter(!is.na(long_gun), date>"1998-12-01") %>%
   group_by(date) %>% 
   summarize(Total = sum(long_gun))
 
@@ -245,6 +245,81 @@ ggplot(nics_byDate, aes(x=date, y=long_gun_diff)) +
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
+Decompose the time series into *seasonal*, *trend*, and *irregular* components using *loess*.
+
+
+```r
+# Make a time series object of the total long gun checks
+nics_ts <- ts(nics_byDate$Total, frequency=12, start=c(1999, 1))
+#nics_ts
+# Decompose using stl
+decomposed <- stl(nics_ts, s.window='periodic')
+names(decomposed)
+```
+
+```
+## [1] "time.series" "weights"     "call"        "win"         "deg"        
+## [6] "jump"        "inner"       "outer"
+```
+
+```r
+# Plot the decomposed parts
+#autoplot(decomposed)
+# Not sure why that didn't work
+
+# Make data frame
+df <- as.data.frame(decomposed$time.series)
+head(df)
+```
+
+```
+##     seasonal    trend  remainder
+## 1  -47931.93 376453.3 -18606.377
+## 2  -30926.40 385552.6  -2215.157
+## 3   16192.81 394651.8 -34069.621
+## 4  -73539.67 402635.2  -5873.544
+## 5 -133931.60 410618.6   4746.987
+## 6 -129781.76 417334.2  -1221.426
+```
+
+```r
+df$date <- nics_byDate$date
+head(df)
+```
+
+```
+##     seasonal    trend  remainder       date
+## 1  -47931.93 376453.3 -18606.377 1999-01-01
+## 2  -30926.40 385552.6  -2215.157 1999-02-01
+## 3   16192.81 394651.8 -34069.621 1999-03-01
+## 4  -73539.67 402635.2  -5873.544 1999-04-01
+## 5 -133931.60 410618.6   4746.987 1999-05-01
+## 6 -129781.76 417334.2  -1221.426 1999-06-01
+```
+
+```r
+df <- df %>% pivot_longer(cols = 1:3, names_to = "component", values_to = "value")
+head(df)
+```
+
+```
+## # A tibble: 6 x 3
+##   date       component   value
+##   <date>     <chr>       <dbl>
+## 1 1999-01-01 seasonal  -47932.
+## 2 1999-01-01 trend     376453.
+## 3 1999-01-01 remainder -18606.
+## 4 1999-02-01 seasonal  -30926.
+## 5 1999-02-01 trend     385553.
+## 6 1999-02-01 remainder  -2215.
+```
+
+```r
+# Plot the decomposed parts
+ggplot(df, aes(x=date, y=value)) + geom_line() + facet_wrap(~component, nrow=3, ncol=1)
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 
 

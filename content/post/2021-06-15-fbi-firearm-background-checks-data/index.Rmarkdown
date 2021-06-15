@@ -87,7 +87,7 @@ Calculate the moving average and plot.
 
 ```{r, warning=F, message=F}
 nics_byDate <- nics %>% 
-  filter(!is.na(long_gun), date>"1998-11-01") %>%
+  filter(!is.na(long_gun), date>"1998-12-01") %>%
   group_by(date) %>% 
   summarize(Total = sum(long_gun))
 
@@ -136,6 +136,31 @@ ggplot(nics_byDate, aes(x=date, y=long_gun_diff)) +
        caption = "Surge in gun sales in December 2012 - Obama re-election")
 ```
 
+Decompose the time series into *seasonal*, *trend*, and *remainder* components using *loess*.
+
+```{r}
+# Make a time series object of the total long gun checks
+nics_ts <- ts(nics_byDate$Total, frequency=12, start=c(1999, 1))
+#nics_ts
+# Decompose using stl
+decomposed <- stl(nics_ts, s.window='periodic')
+names(decomposed)
+
+# Plot the decomposed parts
+#autoplot(decomposed)
+# Not sure why that didn't work
+
+# Make data frame
+df <- as.data.frame(decomposed$time.series)
+head(df)
+df$date <- nics_byDate$date
+head(df)
+df <- df %>% pivot_longer(cols = 1:3, names_to = "component", values_to = "value")
+head(df)
+# Plot the decomposed parts
+ggplot(df, aes(x=date, y=value)) + geom_line() + facet_wrap(~component, nrow=3, ncol=1)
+
+```
 
 
 
