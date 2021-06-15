@@ -6,7 +6,7 @@ slug: test-first-post2
 categories: []
 tags: []
 subtitle: ''
-summary: 'This is my first post using the blogdown platform, so I'm just making sure everything works...'
+summary: ''
 authors: []
 lastmod: '2021-03-31T15:49:46-07:00'
 featured: no
