@@ -255,7 +255,7 @@ ggplot(data = loans) +
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
-No we can see, for instance, what relative proportion of all loans by Asian borrowers had loan-to-value ratio greater than 95%.  Let's reorder the race/ethnicity groups to show a progression from highest to lowest relative proportion, and while we are at it, let's get rid of the "NA" category.
+No we can see, for instance, what relative proportion of all loans by Asian borrowers had loan-to-value ratio greater than 95%.  Let's reorder the race/ethnicity groups to show a progression from highest to lowest relative proportion, and while we are at it, let's get rid of the "NA" category.  Also, the legend categories are out of order, so I'll reorder those by refactoring the variable.
 
 
 ```r
@@ -268,8 +268,13 @@ race_order_new <- c(
   "Black or African American"
 )
 
+# Refactor the race variable to make bar graph easier to interpret
 loans$borr_race_ethn <-
   factor(loans$borr_race_ethn, levels = race_order_new)
+
+# Refactor the loan-to-value variable to correct order
+loans$loan_to_value <- factor(loans$loan_to_value,
+                              levels = c("0-60%", "60-80%", "80-90%", "90-95%", ">95%"))
 
 loans %>% filter(borr_race_ethn != "Not available/not applicable") %>%
   ggplot() +
@@ -308,6 +313,8 @@ loans %>%
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+
+This tells an interesting story about how black or African American and Hispanic or Latino borrowers tend to carry riskier mortgages, which are often saddled with higher interest rates, as compared to whites and Asian borrowers.  Since loan-to-value ratio is a measure of how much is being borrowed relative to the assessed value of the home, a higher number generally means the borrower had less to put down as a down-payment, and often incurs a higher interest rate and additional private mortgage insurance.  Native Hawaiian and other Pacific Islander borrowers have a similar profile to white and Asian borrowers in this plot, with a tendency toward lower loan-to-value ratios.
 
 
 
