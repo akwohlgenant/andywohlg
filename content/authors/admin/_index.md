@@ -20,7 +20,7 @@ interests:
 organizations:
 - name: WohlGeo Consulting
   url: https://www..edu/
-role: Geoscientist and of Data Analytics Specialist
+role: Geoscientist and Data Analytics Specialist
 social:
 - icon: envelope
   icon_pack: fas
