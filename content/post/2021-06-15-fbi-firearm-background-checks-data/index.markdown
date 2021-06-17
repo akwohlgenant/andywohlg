@@ -247,7 +247,7 @@ df$date <- nics_byDate$date
 df <- df %>% pivot_longer(cols = 1:3, names_to = "component", values_to = "value")
 
 # Factor the component column to the order I want
-df$component <- factor(df$component, levels=c("trend", "seasonal", "remainder", labels="Trend", "Seasonal", "Remainder"))
+df$component <- factor(df$component, levels=c("trend", "seasonal", "remainder"))
 
 # Plot the decomposed parts
 ggplot(df, aes(x=date, y=value)) + 

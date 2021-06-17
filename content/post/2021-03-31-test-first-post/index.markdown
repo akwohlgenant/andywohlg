@@ -1,12 +1,12 @@
 ---
-title: Test First Post
+title: First Post Using Blogdown
 author: ''
 date: '2021-03-31'
 slug: test-first-post2
 categories: []
 tags: []
 subtitle: ''
-summary: ''
+summary: 'My first post using Blogdown.  I'll just be plotting some random stuff to make sure its all working right.'
 authors: []
 lastmod: '2021-03-31T15:49:46-07:00'
 featured: no
@@ -19,11 +19,7 @@ projects: []
 
 ## My First R Markdown Post
 
-This is my first post, and I will just be plotting some random stuff to see if it works.  I will also be testing a function I copied from Julia Silge's *silgelib* package to make my plots look as nice as hers look in her post on Super Bowl Commercials and Bootstrap Confidence Intervals.
-
-
-
-
+This is my first post using the *Blogdown* package for R, and I will just be plotting some random stuff to see if it works and how it looks using Blogdown.  I will also be testing a function I copied from Julia Silge's *silgelib* package to make my plots look as nice as hers look in her post on Super Bowl Commercials and Bootstrap Confidence Intervals.
 
 ```r
 summary(Orange)

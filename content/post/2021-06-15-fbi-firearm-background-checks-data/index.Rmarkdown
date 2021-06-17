@@ -179,7 +179,7 @@ df$date <- nics_byDate$date
 df <- df %>% pivot_longer(cols = 1:3, names_to = "component", values_to = "value")
 
 # Factor the component column to the order I want
-df$component <- factor(df$component, levels=c("trend", "seasonal", "remainder", labels="Trend", "Seasonal", "Remainder"))
+df$component <- factor(df$component, levels=c("trend", "seasonal", "remainder"))
 
 # Plot the decomposed parts
 ggplot(df, aes(x=date, y=value)) + 
@@ -192,5 +192,6 @@ ggplot(df, aes(x=date, y=value)) +
 ```
 
 Now we can see quite clearly the three components to the data.  There is an overall trend in the top plot, a repeating annual cyclicity component in the middle plot, and the remaining "noise" component in the bottom plot.
+
 
 
