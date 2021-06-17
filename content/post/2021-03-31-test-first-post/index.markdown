@@ -98,7 +98,21 @@ theme_plex <- function(base_size = 11,
 }
 ```
 
-And here's an example plot of the diamonds data using the theme_plex() function defined above.
+Here's a plot of the diamonds data using the default ggplot specs.
+
+
+```r
+ggplot(diamonds, aes(carat, price, color = clarity)) +
+  geom_point(alpha = 0.7) +
+  facet_wrap(~cut) +
+  labs(title = "Diamonds Data",
+       subtitle = "Taking the GGPlot Defaults")
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" width="2400" />
+
+
+And here's the same plot using the theme_plex() function defined above.
 
 
 ```r
@@ -109,9 +123,9 @@ ggplot(diamonds, aes(carat, price, color = clarity)) +
        subtitle = "Made prettier with Julia Silge's theme_plex() function") + theme_plex()
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" width="2400" />
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="2400" />
 
-Finally, here's a duplicate of the plot in Julia's post.  Isn't that a nice-looking, clear plot?
+Finally, here's a duplicate of the plot in Julia's post on Super Bowl commercials.  Isn't that a nice-looking, clear plot?
 
 
 ```r
@@ -128,5 +142,5 @@ youtube %>%
   labs(x = NULL, y = "% of commercials") + theme_plex()
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="2400" />
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="2400" />
 
