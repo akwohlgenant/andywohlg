@@ -263,3 +263,4 @@ ggplot(df, aes(x=date, y=value)) +
 Now we can see quite clearly the three components to the data.  There is an overall trend in the top plot, a repeating annual cyclicity component in the middle plot, and the remaining "noise" component in the bottom plot.
 
 
+

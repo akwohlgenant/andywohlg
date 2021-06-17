@@ -6,7 +6,7 @@ slug: test-first-post2
 categories: []
 tags: []
 subtitle: ''
-summary: 'My first post using Blogdown.  I'll just be plotting some random stuff to make sure its all working right.'
+summary: 'This is my first post using Blogdown.'
 authors: []
 lastmod: '2021-03-31T15:49:46-07:00'
 featured: no
@@ -17,9 +17,13 @@ image:
 projects: []
 ---
 
-## My First R Markdown Post
+## Trying out the Blogdown package
 
-This is my first post using the *Blogdown* package for R, and I will just be plotting some random stuff to see if it works and how it looks using Blogdown.  I will also be testing a function I copied from Julia Silge's *silgelib* package to make my plots look as nice as hers look in her post on Super Bowl Commercials and Bootstrap Confidence Intervals.
+This is my first post using the `blogdown` package for R, and I will just be plotting some random stuff to see if it works.  I will also be testing a function I copied from Julia Silge's *silgelib* package to make my plots look as nice as hers look in her post on Super Bowl Commercials and Bootstrap Confidence Intervals.
+
+
+
+
 
 ```r
 summary(Orange)
@@ -49,7 +53,11 @@ oplot
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="2400" />
 
-Next I will load the data used by Julia Silge in her post on March 4, 2021, **Bootstrap confidence intervals for #TidyTuesday Super Bowl commercials**.  First I will read in the dataset from the TidyTuesday github repository.
+## Julia Silge's great blog
+
+Lately I've been really enjoying following [Julia Silge](https://juliasilge.com/) and her great blog.  In fact, you might notice my website looks a lot like hers - that's no accident.  Her site has a great clean style that I really admired, so I modeled this site on hers.
+
+To try out Blogdown some more, I will load the data used by Julia Silge in her post on March 4, 2021, [**Bootstrap confidence intervals for #TidyTuesday Super Bowl commercials**](https://juliasilge.com/blog/superbowl-conf-int/).  First I will read in the dataset from the *TidyTuesday* github repository.
 
 
 ```r
