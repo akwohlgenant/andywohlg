@@ -19,7 +19,7 @@ interests:
 - Machine Learning Applications to the Energy Industry
 organizations:
 - name: WohlGeo Consulting
-  url: https://www..edu/
+  url: www.wohlgeo.com
 role: Geoscientist and Data Analytics Specialist
 social:
 - icon: envelope
