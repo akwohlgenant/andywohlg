@@ -23,7 +23,7 @@ projects: []
 
 *Image by Arturo Rey on Unsplash*
 
-The Gaussian Mixture Modeling (GMM) method is another form of unsupervised classification, but unlike k-means clustering, the data being classified is assigned a probability of being in one cluster versus another.  Let's rewind a bit, and just review what I am referring to by the terms *clustering* and *cluster*.  Clustering is simply grouping similar data points together based on their attributes.  A *cluster* is just a group resulting from a clustering algorithm.
+Gaussian Mixture Modeling (GMM) is another form of unsupervised classification, but unlike k-means clustering, the data being classified is assigned a probability of being in one cluster versus another.  Let's rewind a bit, and just review what I am referring to by the terms *clustering* and *cluster*.  Clustering is simply grouping similar data points together based on their attributes.  A *cluster* is just a group resulting from a clustering algorithm.
 
 In a previous post, I used probably the most common clustering algorithm, *K-Means Clustering*, to classify well log data into groups based on similarity of different geophysical log measurements.  K-means clustering is very black or white; a point is either in a particular cluster or it's not.  It is a distance-based algorithm, so it attempts to group points together that are closest to a common centroid.  One drawback to k-means clustering is that it tends to form circular clusters in the data space.  This works great for some data, but not so great for other data where groupings may have different ideal shapes.
 
