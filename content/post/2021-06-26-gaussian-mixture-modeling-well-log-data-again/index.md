@@ -25,21 +25,21 @@ projects: []
 
 The Gaussian Mixture Modeling (GMM) method is another form of unsupervised classification, but unlike k-means clustering, the data being classified is assigned a probability of being in one cluster versus another.  Let's rewind a bit, and just review what I am referring to by the terms *clustering* and *cluster*.  Clustering is simply grouping similar data points together based on their attributes.  A *cluster* is just a group resulting from a clustering algorithm.
 
-In a previous post, I used one of the most common clustering algorithms, *K-Means Clustering*, to classify well log data into groups based on similarity of different geophysical log measurements.  K-means clustering is very black or white; a point is either in cluster A or it's not.  It is a distance-based algorithm, so it attempts to group points together that are closest to a common centroid.  One drawback to k-means clustering is that it tends to form circular clusters in the data space.  This works great for some data, but not so great for other data where grouping may have different ideal shapes.
+In a previous post, I used probably the most common clustering algorithm, *K-Means Clustering*, to classify well log data into groups based on similarity of different geophysical log measurements.  K-means clustering is very black or white; a point is either in a particular cluster or it's not.  It is a distance-based algorithm, so it attempts to group points together that are closest to a common centroid.  One drawback to k-means clustering is that it tends to form circular clusters in the data space.  This works great for some data, but not so great for other data where groupings may have different ideal shapes.
 
-In GMM, it is assumed that there are a certain number of Gaussian distributions, each of which represents a cluster. This is a fairly intuitive assumption, since we are all familiar with the bell-shaped Gaussian or *Normal* distribution.  GMM uses elliptical decision boundaries, not circular boundaries.  These boundary shapes may make GMM a better choice for certain types of data where circular boundaries are not ideal.  An excellent discussion of the differences can be found in this post on *Analytics Vidhya*:
+In GMM, it is assumed that there are a certain number of Gaussian distributions, each of which represents a cluster. This is a fairly intuitive assumption, since we are all familiar with the bell-shaped Gaussian or *Normal* distribution.  Unlike k-means, GMM allows for elliptical decision boundaries, which may be a better choice for some data than circular boundaries.  An excellent discussion of the differences between k-means and GMM can be found in this post on *Analytics Vidhya*:
 
 https://www.analyticsvidhya.com/blog/2019/10/gaussian-mixture-models-clustering/.  
 
-I should also point out that I learned about GMM and the blog post above from another excellent blog post by Andy McDonald.  His website is a treasure-trove of great petrophysical workflows using Python.  A lot of this post is a rehashing of what he did in his post on clustering, which you can read here: 
+I should also point out that I first learned about GMM and the blog post above from another excellent blog post by **Andy McDonald**.  His website is a treasure-trove of great petrophysical workflows using Python.  A lot of this post is a rehashing of what he did in his post on clustering, which you can read here: 
 
 https://www.andymcdonald.scot/blog/2021/2021-06-02-unsupervised-clustering-of-facies/.
 
-In this post, I will return to the Hugoton (Kansas) well log data from the k-means clustering post, and use the GMM method to generate clusters.  This data set contains log data from 10 wells, as well as a field containing a *Facies* designations.  In the earlier post, we compared the clusters to Facies to see how well they matched up.  This is a little bit of a fools errand, since the facies tend to be defined more from core samples (if available) since that is the "ground truth" for many geoscientists.  I am a geoscientist myself, so I admit to a bias toward physical examination of the rock itself versus a remotely-sensed measurement of a geophysical property of the rock.
+Now I will return to the Hugoton (Kansas) well log data from the k-means clustering post, and use the GMM method to generate clusters.  The Hugoton data set contains geophysical log data from 10 wells, as well as a field containing a *Facies* designation for each depth sample.  
 
-This means that *Facies* itself is human-defined, and not necessarily from the same data with which we are defining the clusters.  So don't be surprised if there isn't a very good match between Facies and clusters.  In fact, for this exercise, we shouldn't necessarily assume facies is "truth", but rather one *possible truth*.
+In the earlier post, we compared the clusters to Facies to see how well they matched up.  This is a little bit of a fools errand, since the facies tend to be defined more from core samples (if available) since that is the "ground truth" for many geoscientists.  I am a geoscientist myself, so I admit to a bias toward physical examination of the rock itself versus a remotely-sensed measurement of a geophysical property of the rock.
 
-This will be my first *blogdown* post using Python instead of R, so hopefully this will work out all right.  I did all of the work in a Jupyter notebook, and then converted that to markdown and pasted into an empty blogdown post.
+This means that *Facies* is human-defined, and not necessarily from the same data with which we want to define the clusters.  So don't be surprised if there isn't a very good match between Facies and clusters.  In fact, for this exercise, we shouldn't necessarily assume facies is "truth", but rather one *possible truth*.
 
 
 ```python
@@ -277,7 +277,7 @@ df2.head()
 
 
 
-Now I will make a dictionary to map the Facies numbers to actual descriptive names.  I'm not a carbonate geologist, so I'm not entirely sure what all of these facies definitions really mean, but we'll see if any of them match up with a particular cluster.
+Now I will make a dictionary to map the Facies numbers to actual descriptive names. 
 
 
 ```python
