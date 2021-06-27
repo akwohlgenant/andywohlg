@@ -6,7 +6,7 @@ slug: gaussian-mixture-modeling-well-log-data-again
 categories: []
 tags: []
 subtitle: ''
-summary: ''
+summary: 'Same well log data, but this time clustering with Gaussian Mixture Modeling in Python.'
 authors: []
 lastmod: '2021-06-26T17:23:36-07:00'
 featured: no
