@@ -43,4 +43,4 @@ I also do freelance geoscience and analytics consulting, and I'm currently pursu
 
 In my career as a geoscientist, I worked for about 20 years as a geologist and geophysicist in the oil and gas industry for organizations ranging from ExxonMobil to the U.S. Bureau of Ocean Energy Management and, most recently, Netherland, Sewell & Associates, Inc., a worldwide petroleum consulting firm located in Dallas, Texas, USA.
 
-I currently reside in the San Francisco Bay area in California.
+I live in the San Francisco Bay area in California.
