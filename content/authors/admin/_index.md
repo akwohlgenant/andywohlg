@@ -37,7 +37,9 @@ superuser: true
 title: Andy Wohlgenant
 ---
 
-My name is Andy Wohlgenant and I am a geoscientist and data practitioner.  I do freelance geoscience and analytics consulting, and I'm currently also pursuing a Master's degree in Data Analytics from Oregon State University.
+My name is Andy Wohlgenant, and I currently work at San José State University in the Department of Institutional Research, where I handle a variety of data analysis tasks to help University faculty and administrators make data-driven decisions to drive student success.
+
+I also do freelance geoscience and analytics consulting, and I'm currently pursuing a Master's degree in Data Analytics from Oregon State University.
 
 In my career as a geoscientist, I worked for about 20 years as a geologist and geophysicist in the oil and gas industry for organizations ranging from ExxonMobil to the U.S. Bureau of Ocean Energy Management and, most recently, Netherland, Sewell & Associates, Inc., a worldwide petroleum consulting firm located in Dallas, Texas, USA.
 
