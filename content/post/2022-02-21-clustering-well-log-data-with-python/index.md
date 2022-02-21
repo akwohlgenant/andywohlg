@@ -6,10 +6,10 @@ slug: clustering-well-log-data-with-python
 categories: []
 tags: []
 subtitle: ''
-summary: ''
+summary: 'K-means clustering of well-log data from Kansas using Python'
 authors: []
 lastmod: '2022-02-21T13:53:02-08:00'
-featured: no
+featured: yes
 image:
   caption: ''
   focal_point: ''
@@ -18,6 +18,10 @@ projects: []
 ---
 
 ## K-Means Clustering of Well Log Data from Hugoton Gas Field, Kansas
+
+![jpg](index_files/figure-html/zbynek-burival-GrmwVnVSSdU-unsplash.jpg)
+
+*Photo by Zbynek Burival on Unsplash*
 
 ### Table of Contents
 <ul>
