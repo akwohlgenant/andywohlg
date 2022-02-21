@@ -1,5 +1,5 @@
 ---
-title: FBI Firearm Background Checks
+title: Time Series Analysis of FBI Firearm Background Checks
 author: Andy Wohlgenant
 date: '2021-06-15'
 slug: fbi-firearm-background-checks-data
