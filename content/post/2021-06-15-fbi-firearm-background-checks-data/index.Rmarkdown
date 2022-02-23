@@ -158,7 +158,9 @@ ggplot(nics_byDate, aes(x=date, y=Departures)) +
 
 ## Decomposition of time-series data
 
-A lot of the work I just did can be handled with more formal *decomposition of time series data* statistical methods.  These methods can be easily accessed in R using functions from the `stats` package that comes with R out-of-the-box.
+A lot of the work I just did can be handled with more formal *time series analysis* statistical methods.  These methods can be easily accessed in R using functions from the `stats` package that comes with R out-of-the-box.
+
+In time series analysis, we typically want to decompose a time series into three components: *trend*, *seasonality*, and a residual process that is **stationary**.  We would then treat the trend and seasonality components as deterministic, and the residual component can be thought of as an error term that is random.
 
 Let's use the `ts` and `stl` functions from `stats` to decompose the time series into *seasonal*, *trend*, and *remainder* components using *loess* or *locally weighted smoothing*.  Then we can plot the three components on separate plot facets.
 
