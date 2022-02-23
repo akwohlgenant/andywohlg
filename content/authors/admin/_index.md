@@ -42,3 +42,5 @@ My name is Andy Wohlgenant, and I currently do freelance geoscience and analytic
 In my career as a geoscientist, I worked for about 20 years as a geologist and geophysicist in the oil and gas industry for organizations ranging from ExxonMobil to the U.S. Bureau of Ocean Energy Management and, most recently, Netherland, Sewell & Associates, Inc., a worldwide petroleum consulting firm located in Dallas, Texas, USA.
 
 I live in the San Francisco Bay area in California.
+
+<a href="https://www.buymeacoffee.com/akwohlgp" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
